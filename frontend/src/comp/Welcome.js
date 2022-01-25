@@ -8,7 +8,9 @@ const Welcome = () => {
     history.push("/");
   }
   const login = () => {
+    history.push("/");
     localStorage.clear();
+    console.log("first");
   };
   return (
     <>
