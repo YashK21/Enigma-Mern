@@ -10,7 +10,6 @@ const Welcome = () => {
   const login = () => {
     history.push("/");
     localStorage.clear();
-    console.log("first");
   };
   return (
     <>
