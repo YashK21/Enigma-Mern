@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
         const payload = {
           " id": userLogin._id,
         };
-        jwt.sign(payload, "enigma", { expiresIn: "10h" }, (err, token) => {
+        jwt.sign(payload, config.jwtkey, { expiresIn: "10h" }, (err, token) => {
           res.json({
             token: token,
             msg: "login successfull",
@@ -60,38 +60,4 @@ router.post("/login", async (req, res) => {
     console.log(err);
   }
 });
-
-// router.get("/welcome", (req, res) => {
-//   jwt.verify(token, "enigma", (err, authData) => {
-//     if (err) {
-//       res.status(403);
-//     } else {
-//       res.json({
-//         authData,
-//       });
-//     }
-//   });
-// });
-// router.post("/welcome", verifytoken, (req, res) => {
-//   jwt.verify(req.token, "enigma", (err, authData) => {
-// if (err) {
-//   res.status(403);
-// } else {
-//   res.json({
-//     authData,
-//   });
-//     }
-//   });
-// });
-// function verifytoken(req, res, next) {
-//   const authheader = req.header["authorization"];
-//   if (typeof authheader != "undefined") {
-//     const header = authheader.split(" ");
-//     const headertoken = header[1];
-//     req.token = headertoken;
-//     next();
-//   } else {
-//     res.status(403);
-//   }
-// }
 module.exports = router;
