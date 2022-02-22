@@ -7,7 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const submit = async (e) => {
     e.preventDefault();
-    const res = await fetch("/login", {
+    const res = await fetch("login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,10 +22,7 @@ const Login = () => {
       alert("Invalid Credentials");
     } else {
       alert("Successful Login");
-      // localStorage.setItem("username", username);
-      // localStorage.setItem("password", password);
       localStorage.setItem("token", data.token);
-      // console.log(data?.token);
       history.push("../welcome");
     }
   };

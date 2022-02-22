@@ -4,7 +4,8 @@ const bcrpyt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../model/schema");
 const config = require("../config.json");
-require("../db/conn");
+const Level = require("../levelmodel/levelschems");
+
 router.post("/register", async (req, res) => {
   const { name, email, username, password, cpassword } = req.body;
 
@@ -39,6 +40,7 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ error: `Any of the filed can't be empty` });
     }
     const userLogin = await User.findOne({ username });
+    // console.log(userLogin);
     if (userLogin) {
       const ismatch = await bcrpyt.compare(password, userLogin.password);
       if (!ismatch) {
@@ -56,6 +58,30 @@ router.post("/login", async (req, res) => {
       }
     } else {
       res.status(400).json({ msg: "invalid credentials" });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+router.post("/level1", async (req, res) => {
+  try {
+    const { level } = req.body;
+    if (!level) {
+      return res.status(400).json({ error: "Answer can't be empty" });
+    }
+    const levelanswer = await Level.findOne({ level });
+    // console.log(levelanswer);
+    // console.log(level);
+    if (levelanswer.level != level) {
+      res.status(400).json({
+        msg: "Incorrect Answer",
+        status: false,
+      });
+    } else {
+      res.json({
+        msg: "Correct Answer",
+        status: true,
+      });
     }
   } catch (err) {
     console.log(err);

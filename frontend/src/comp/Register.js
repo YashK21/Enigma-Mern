@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../comp/register.css";
+import Login from "./Login";
 const Register = () => {
   const history = useHistory();
   const [user, setUser] = useState({
@@ -20,7 +21,7 @@ const Register = () => {
   const submit = async (e) => {
     e.preventDefault();
     const { name, email, username, password, cpassword } = user;
-    const res = await fetch("/register", {
+    const res = await fetch("api/v1/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,12 +35,15 @@ const Register = () => {
       }),
     });
     const data = await res.json();
-    if (data.status === 422 || !data) {
+    if (res.status === 422 || !data) {
       alert(`invalid reg`);
     } else {
       alert("successful reg");
       history.push("../");
     }
+  };
+  const Login = () => {
+    history.push("../");
   };
   return (
     <>
@@ -122,6 +126,9 @@ const Register = () => {
         <button type="submit" onClick={submit}>
           Register
         </button>
+        <br />
+        <br />
+        <button onClick={Login}>Have An Account ? Sign In!</button>
       </form>
     </>
   );

@@ -8,12 +8,7 @@ app.use(require("./router/auth"));
 app.get("/", (req, res) => {
   res.send(`Home from server`);
 });
-app.get("/login", (req, res) => {
-  res.send(`Login from server`);
-});
-app.get("/register", (req, res) => {
-  res.send(`Registration from server`);
-});
+// app.use(require("./router/auth"));
 
 app.listen(config.port, () => {
   console.log(`Listening at ${config.port}`);
