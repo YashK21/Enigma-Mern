@@ -2,14 +2,21 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 const Level1 = () => {
   const [level, setLevel] = useState("");
+  const token = localStorage.getItem("token");
+  // console.log(token);
   const history = useHistory();
+  if (token) {
+    history.push("/level1");
+  } else {
+    history.push("/error");
+  }
   const submit = async (e) => {
     e.preventDefault();
     var body = JSON.stringify({
       level,
     });
     // console.log(body);
-    const res = await fetch("level1", {
+    const res = await fetch(`level1`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,16 +27,20 @@ const Level1 = () => {
     // console.log("Step1");
     console.log(data);
     console.log(res.status);
-    console.log(data.status);
-    if (data.status) {
-      // Id ka level +1, score ->
+    if (res.status === 200 || !data) {
+      history.push("/final");
     } else {
-      //
+      // Id ka level +1, score ->
+      alert("wrong");
     }
+  };
+  const logout = () => {
+    history.push("/");
+    localStorage.clear();
   };
   return (
     <div>
-      Level 1
+      level1
       <img
         src={require("../img/level1.jpg")}
         height={500}
@@ -47,6 +58,7 @@ const Level1 = () => {
           Submit
         </button>
       </form>
+      <button onClick={logout}>Logout Me</button>
     </div>
   );
 };

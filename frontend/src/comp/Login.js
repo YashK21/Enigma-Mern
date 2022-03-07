@@ -23,7 +23,8 @@ const Login = () => {
     } else {
       alert("Successful Login");
       localStorage.setItem("token", data.token);
-      history.push("../welcome");
+      history.push("/instruction");
+      // console.log(localStorage.getItem("token"));
     }
   };
   const register = () => {

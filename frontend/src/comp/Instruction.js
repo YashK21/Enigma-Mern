@@ -1,25 +1,27 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-const Welcome = () => {
+const Instruction = () => {
   const history = useHistory();
   var token = localStorage.getItem("token");
-  if (!token) {
-    history.push("/");
+  if (token) {
+    history.push("/instruction");
+  } else {
+    history.push("/error");
   }
   const level = () => {
-    history.push("/level1");
+    history.push("level1");
   };
-  const login = () => {
+  const logout = () => {
     history.push("/");
     localStorage.clear();
   };
   return (
     <>
-      Welcome page
+      Instruction page
       <button onClick={level}>Level 1</button>
-      <button onClick={login}>Logout Me</button>
+      <button onClick={logout}>Logout Me</button>
     </>
   );
 };
 
-export default Welcome;
+export default Instruction;

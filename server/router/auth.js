@@ -70,17 +70,33 @@ router.post("/level1", async (req, res) => {
       return res.status(400).json({ error: "Answer can't be empty" });
     }
     const levelanswer = await Level.findOne({ level });
+    // console.log("after line 73");
     // console.log(levelanswer);
     // console.log(level);
-    if (levelanswer.level != level) {
-      res.status(400).json({
-        msg: "Incorrect Answer",
-        status: false,
+    // if (levelanswer.level == level) {
+    //   console.log("after line 77");
+    //   console.log(level);
+    //   res.status(200).json({
+    //     msg: "Correct Answer",
+    //     // status: true,
+    //   });
+    // } else {
+    //   res.status(400).json({
+    //     msg: "Incorrect Answer",
+    //     // status: false,
+    //   });
+    // }
+    if (levelanswer) {
+      // console.log("after line 91");
+      // console.log(level);
+      res.status(200).json({
+        msg: "Correct Answer",
+        // status: true,
       });
     } else {
-      res.json({
-        msg: "Correct Answer",
-        status: true,
+      res.status(400).json({
+        msg: "Incorrect Answer",
+        // status: false,
       });
     }
   } catch (err) {
