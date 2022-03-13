@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-const Level1 = () => {
-  const [level, setLevel] = useState("");
+const Level = () => {
+  const [level, setAnswer] = useState("");
   const token = localStorage.getItem("token");
+  const [l, setl] = useState(1);
   // console.log(token);
   const history = useHistory();
   if (token) {
@@ -15,6 +16,7 @@ const Level1 = () => {
     var body = JSON.stringify({
       level,
     });
+
     // console.log(body);
     const res = await fetch(`level1`, {
       method: "POST",
@@ -28,9 +30,9 @@ const Level1 = () => {
     console.log(data);
     console.log(res.status);
     if (res.status === 200 || !data) {
-      history.push("/final");
+      setl(l + 1);
+      console.log(l);
     } else {
-      // Id ka level +1, score ->
       alert("wrong");
     }
   };
@@ -42,17 +44,18 @@ const Level1 = () => {
     <div>
       level1
       <img
-        src={require("../img/level1.jpg")}
+        src={require(`../img/${l}.jpg`)}
         height={500}
         width={400}
-        alt="level1"
+        alt="level"
       />
+      ;
       <form method="POST">
         <input
-          name="level"
+          name="answer"
           placeholder="enter answer here"
           value={level}
-          onChange={(e) => setLevel(e.target.value)}
+          onChange={(e) => setAnswer(e.target.value)}
         />
         <button onClick={submit} type="submit" className="btn btn-primary">
           Submit
@@ -63,4 +66,4 @@ const Level1 = () => {
   );
 };
 
-export default Level1;
+export default Level;
