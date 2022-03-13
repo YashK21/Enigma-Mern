@@ -63,13 +63,14 @@ router.post("/login", async (req, res) => {
     console.log(err);
   }
 });
-router.post("/level1", async (req, res) => {
+router.post(`/level1`, async (req, res) => {
   try {
     const { level } = req.body;
     if (!level) {
       return res.status(400).json({ error: "Answer can't be empty" });
     }
     const levelanswer = await Level.findOne({ level });
+
     // console.log("after line 73");
     // console.log(levelanswer);
     // console.log(level);
