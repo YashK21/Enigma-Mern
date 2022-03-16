@@ -1,24 +1,26 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 const Level = () => {
-  const [level, setAnswer] = useState("");
+  const [ans, setAns] = useState("");
+  const [levelno, setLevelNo] = useState("");
   const token = localStorage.getItem("token");
   const [l, setl] = useState(1);
   // console.log(token);
   const history = useHistory();
   if (token) {
-    history.push("/level1");
+    // history.push("/level1");
   } else {
     history.push("/error");
   }
   const submit = async (e) => {
     e.preventDefault();
     var body = JSON.stringify({
-      level,
+      levelno,
+      ans,
     });
 
     // console.log(body);
-    const res = await fetch(`level1`, {
+    const res = await fetch(`level${l}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,8 +56,8 @@ const Level = () => {
         <input
           name="answer"
           placeholder="enter answer here"
-          value={level}
-          onChange={(e) => setAnswer(e.target.value)}
+          value={ans}
+          onChange={(e) => setAns(e.target.value)}
         />
         <button onClick={submit} type="submit" className="btn btn-primary">
           Submit

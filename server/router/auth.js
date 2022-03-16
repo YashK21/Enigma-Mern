@@ -5,9 +5,9 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/schema");
 const config = require("../config.json");
 const Level = require("../levelmodel/levelschems");
-
+var l = 1;
 router.post("/register", async (req, res) => {
-  const { name, email, username, password, cpassword } = req.body;
+  const { name, email, username, password, cpassword, level } = req.body;
 
   if (!name || !email || !username || !password || !cpassword) {
     return res.status(422).json({ error: "all fileds must be filled" });
@@ -25,6 +25,7 @@ router.post("/register", async (req, res) => {
       username,
       password,
       cpassword,
+      level,
     });
     await new_user.save();
     res.status(201).json({ msg: "registered" });
@@ -63,41 +64,20 @@ router.post("/login", async (req, res) => {
     console.log(err);
   }
 });
-router.post(`/level1`, async (req, res) => {
+router.post(`/level${l}`, async (req, res) => {
   try {
-    const { level } = req.body;
-    if (!level) {
+    const { ans } = req.body;
+    if (!ans) {
       return res.status(400).json({ error: "Answer can't be empty" });
     }
-    const levelanswer = await Level.findOne({ level });
-
-    // console.log("after line 73");
-    // console.log(levelanswer);
-    // console.log(level);
-    // if (levelanswer.level == level) {
-    //   console.log("after line 77");
-    //   console.log(level);
-    //   res.status(200).json({
-    //     msg: "Correct Answer",
-    //     // status: true,
-    //   });
-    // } else {
-    //   res.status(400).json({
-    //     msg: "Incorrect Answer",
-    //     // status: false,
-    //   });
-    // }
-    if (levelanswer) {
-      // console.log("after line 91");
-      // console.log(level);
+    const levelans = await Level.findOne({ ans });
+    if (levelans) {
       res.status(200).json({
         msg: "Correct Answer",
-        // status: true,
       });
     } else {
       res.status(400).json({
         msg: "Incorrect Answer",
-        // status: false,
       });
     }
   } catch (err) {
